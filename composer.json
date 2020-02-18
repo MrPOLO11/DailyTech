@@ -1,0 +1,16 @@
+{
+  "name": "The Daily Tech",
+  "authors": [
+    {
+      "name": "Taras Gorbachevskiy",
+      "email": "gorbataras@gmail.com"
+    },
+    {
+      "name": "Marcos Rivera",
+      "email": "mrivera@mail.greenriver.com"
+    }
+  ],
+  "require": {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}
