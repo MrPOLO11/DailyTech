@@ -73,4 +73,26 @@ class Database
         return password_verify($password, $storedHash);
     }
 
+    function insertPosts($email, $post)
+    {
+        $sql = "SELECT user_ID FROM MyUser
+                WHERE :email = email";
+
+        $statement = $this->_dbh->prepare($sql);
+        $statement->bindParam(':email', $email);
+
+        $foundID = $statement->fetch(PDO::FETCH_ASSOC);
+        $userID = $foundID->get('user_ID');
+
+        $sql2 = "INSERT INTO MyPost (`user_ID`, `articleText`, `header`)
+                 WHERE :userID = user_ID
+                 VALUES (:userID, :body, :header)";
+
+        $statement = $this->_dbh->prepare($sql2);
+        $statement->bindParam(':userID', $userID);
+        $statement->bindParam(':body', $post->getBody());
+        $statement->bindParam(':header', $post->getHeader());
+
+        $statement ->execute();
+    }
 }

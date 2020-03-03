@@ -17,5 +17,31 @@ class post {
 		$this->_body=$_body;
 	}
 
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->_type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHeader()
+    {
+        return $this->_header;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBody()
+    {
+        return $this->_body;
+    }
+
+
+
 
 }
