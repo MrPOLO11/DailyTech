@@ -13,6 +13,9 @@ $f3 = Base::instance();
 
 $f3->set('DEBUG', 3);
 
+//Instantiate database
+$db = new Database();
+
 // Defining a default route
 $f3->route('GET /', function () {
     $view = new Template();
