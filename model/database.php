@@ -43,4 +43,34 @@ class Database
 
         return $result;
     }
+
+    function insertUser($user) {
+        $sql = "INSERT INTO MyUser(name, email, organization, position, myPassword, isAdmin)
+                    VALUES (:name, :email, :org, :position, :pswd, :isAdmin)";
+        $statement = $this->_dbh->prepare($sql);
+        $passhash = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+        $isAdmin = is_a($user, "AdminUser");
+        $statement ->bindParam(':name', $user->getName());
+        $statement ->bindParam(':email', $user->getEmail());
+        $statement ->bindParam(':org', $user->getOrganization());
+        $statement ->bindParam(':position', $user->getPosition());
+        $statement ->bindParam(':pswd', $passhash);
+        $statement ->bindParam(':isAdmin', $isAdmin);
+
+        $statement->execute();
+    }
+
+    function verifyLogin($email, $password) {
+        // PULL PASSWORD HASH
+        $sql = "SELECT myPassword FROM MyUser
+                    WHERE :email = email";
+        $statement = $this->_dbh->prepare($sql);
+        $statement->bindParam('email', $email);
+        $statement->execute();
+
+        $hashArray = $statement->fetch(PDO::FETCH_ASSOC);
+        $storedHash = $hashArray->get('myPassword');
+        return password_verify($password, $storedHash);
+    }
+
 }
