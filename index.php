@@ -15,12 +15,17 @@ $f3->set('DEBUG', 3);
 
 //Instantiate database
 $db = new Database();
+$controller = new Controller($f3);
 
 // Defining a default route
 $f3->route('GET /', function () {
-    $view = new Template();
-    echo $view->render('views/home.html');
+    $GLOBALS['controller']->home();
 });
+
+$f3->route('GET|POST /login', function () {
+    $GLOBALS['controller']->login();
+});
+
 
 // Run F3
 $f3->run();

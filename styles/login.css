@@ -1,0 +1,13 @@
+#loginCard {
+    height: 500px;
+}
+
+#loginFields {
+
+    padding: 75px 30px 15px 30px !important;
+}
+
+.login {
+    width: 200px;
+/*    padding: 10px 10px 10px 10px;*/
+}
