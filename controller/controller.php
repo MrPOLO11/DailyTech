@@ -28,7 +28,7 @@ class Controller {
                     $userArray->get('organization'),
                     $userArray->get('position')
                 );
-	            $GLOBALS['f3']->reroute('views/home/');
+	            $GLOBALS['f3']->reroute('/');
             }
         }
         $view = new Template();
@@ -37,7 +37,7 @@ class Controller {
 
     public function  signup() {
 	    if (isset($_SESSION['user'])) {
-	        $GLOBALS['f3']->reroute('views/home/');
+	        $GLOBALS['f3']->reroute('/');
         }
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $passHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -51,23 +51,17 @@ class Controller {
                 $passHash,
                 $organization,
                 $position);
-                $newName = $user->getName();
-                $newEmail = $user->getEmail();
-                $newOrg = $user->getOrganization();
-                $newPos = $user->getPosition();
-                echo "name: $newName";
-                echo "name: $newEmail";
-                echo "name: $passHash";
-                echo "name: $newOrg";
-                echo "name: $newPos";
-
-
-
+                $_SESSION['user'] = $user;
                 $GLOBALS['db']->insertUser($user);
-//                $GLOBALS['f3']->reroute('views/home/');
+                $GLOBALS['f3']->reroute('views/home/');
         }
         $view = new Template();
         echo $view->render('views/signup.html');
+    }
+
+    public function logout() {
+	    session_destroy();
+	    $GLOBALS['f3']->reroute('/');;
     }
 
 }

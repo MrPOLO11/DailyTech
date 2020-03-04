@@ -1,13 +1,13 @@
 <?php
 
-session_start();
+
 // Turn on error reporting
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 // Require autoload file
 require("vendor/autoload.php");
-
+session_start();
 // Instantiate F3
 $f3 = Base::instance();
 
@@ -26,6 +26,13 @@ $f3->route('GET|POST /login', function () {
     $GLOBALS['controller']->login();
 });
 
+$f3->route('GET|POST /signup', function () {
+    $GLOBALS['controller']->signup();
+});
+
+$f3->route('GET /logout', function () {
+    $GLOBALS['controller']->logout();
+});
 
 // Run F3
 $f3->run();

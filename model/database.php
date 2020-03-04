@@ -38,7 +38,8 @@ class Database
         $statement = $this->_dbh->prepare($sql);
 
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
     }
 
     function getPosts()
