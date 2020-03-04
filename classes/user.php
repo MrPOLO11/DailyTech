@@ -10,17 +10,22 @@ class User
     private $_position;
 
     /**
-     * user constructor.
+     * User constructor.
      * @param $_name
      * @param $_email
      * @param $_password
+     * @param $_organization
+     * @param $_position
      */
-    public function __construct($_name, $_email, $_password)
+    public function __construct($_name, $_email, $_password, $_organization, $_position)
     {
         $this->_name = $_name;
         $this->_email = $_email;
         $this->_password = $_password;
+        $this->_organization = $_organization;
+        $this->_position = $_position;
     }
+
 
     /**
      * @return mixed

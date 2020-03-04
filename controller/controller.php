@@ -21,13 +21,53 @@ class Controller {
             $suppliedEmail = $_POST['email'];
 	        $validPass = $GLOBALS['db']->verifyLogin($suppliedEmail, $suppliedPass);
 	        if ($validPass) {
-	            $GLOBALS['f3']->reroute('views/home');
+                $userArray = $GLOBALS['db']-> getUser($suppliedEmail);
+	            $_SESSION['user'] = new User($userArray->get('name'),
+                    $suppliedEmail,
+                    $suppliedPass,
+                    $userArray->get('organization'),
+                    $userArray->get('position')
+                );
+	            $GLOBALS['f3']->reroute('views/home/');
             }
-
         }
         $view = new Template();
         echo $view->render('views/login.html');
     }
 
+    public function  signup() {
+	    if (isset($_SESSION['user'])) {
+	        $GLOBALS['f3']->reroute('views/home/');
+        }
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $passHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $organization = $_POST['org'];
+            $position = $_POST['position'];
+            $user = new StandardUser(
+                $name,
+                $email,
+                $passHash,
+                $organization,
+                $position);
+                $newName = $user->getName();
+                $newEmail = $user->getEmail();
+                $newOrg = $user->getOrganization();
+                $newPos = $user->getPosition();
+                echo "name: $newName";
+                echo "name: $newEmail";
+                echo "name: $passHash";
+                echo "name: $newOrg";
+                echo "name: $newPos";
+
+
+
+                $GLOBALS['db']->insertUser($user);
+//                $GLOBALS['f3']->reroute('views/home/');
+        }
+        $view = new Template();
+        echo $view->render('views/signup.html');
+    }
 
 }
