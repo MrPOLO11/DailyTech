@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- SIGN UP PAGE-->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +13,36 @@
 </head>
 <body>
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">The Daily Tech</a>
+
+    <div class="collapse navbar-collapse" id="navbar-main">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">General</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Mobile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Programming</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Science</a>
+            </li>
+            <check if=" {{ isset(@SESSION.user) }}">
+                <true><li class="nav-item"><a class="nav-link" href="logout">Logout</a></li></true>
+                <false><li class="nav-item"><a href="login" class="nav-link">Log In</a></li></false>
+            </check>
+        </ul>
+    </div>
+</nav>
 
 <div class="container">
     <form action="#" method="post">

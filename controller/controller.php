@@ -53,7 +53,7 @@ class Controller {
                 $position);
                 $_SESSION['user'] = $user;
                 $GLOBALS['db']->insertUser($user);
-                $GLOBALS['f3']->reroute('views/home/');
+                $GLOBALS['f3']->reroute('/');
         }
         $view = new Template();
         echo $view->render('views/signup.html');
