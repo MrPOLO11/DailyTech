@@ -36,10 +36,10 @@ class Database
                     WHERE :email = email";
 
         $statement = $this->_dbh->prepare($sql);
-
+		$statement->bindParam(':email', $email);
         $statement->execute();
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $result;
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+
     }
 
     function getPosts()
@@ -60,7 +60,7 @@ class Database
         $sql = "INSERT INTO MyUser(name, email, organization, position, myPassword, isAdmin)
                     VALUES (:name, :email, :org, :position, :pswd, :isAdmin)";
         $statement = $this->_dbh->prepare($sql);
-        $passhash = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+        $passhash = sha1($user->getPassword());
         if (is_a($user, "AdminUser")) {
             $isAdmin = 1;
         } else {
@@ -80,13 +80,15 @@ class Database
         // PULL PASSWORD HASH
         $sql = "SELECT myPassword FROM MyUser
                     WHERE :email = email";
+        $this->_dbh->beginTransaction();
         $statement = $this->_dbh->prepare($sql);
-        $statement->bindParam('email', $email);
+        $statement->bindParam(':email', $email);
         $statement->execute();
-
+        $this->_dbh->commit();
         $hashArray = $statement->fetch(PDO::FETCH_ASSOC);
-        $storedHash = $hashArray->get('myPassword');
-        return password_verify($password, $storedHash);
+
+        $storedHash = $hashArray['myPassword'];
+        return $storedHash == sha1(sha1($password));
     }
 
     function insertPosts($email, $post)

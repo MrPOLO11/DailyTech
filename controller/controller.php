@@ -22,11 +22,11 @@ class Controller {
 	        $validPass = $GLOBALS['db']->verifyLogin($suppliedEmail, $suppliedPass);
 	        if ($validPass) {
                 $userArray = $GLOBALS['db']-> getUser($suppliedEmail);
-	            $_SESSION['user'] = new User($userArray->get('name'),
+	            $_SESSION['user'] = new User($userArray['name'],
                     $suppliedEmail,
                     $suppliedPass,
-                    $userArray->get('organization'),
-                    $userArray->get('position')
+                    $userArray['organization'],
+                    $userArray['position']
                 );
 	            $GLOBALS['f3']->reroute('/');
             }
@@ -40,7 +40,7 @@ class Controller {
 	        $GLOBALS['f3']->reroute('/');
         }
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $passHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $passHash = sha1($_POST['password']);
             $name = $_POST['name'];
             $email = $_POST['email'];
             $organization = $_POST['org'];
@@ -51,6 +51,7 @@ class Controller {
                 $passHash,
                 $organization,
                 $position);
+
                 $_SESSION['user'] = $user;
                 $GLOBALS['db']->insertUser($user);
                 $GLOBALS['f3']->reroute('/');
