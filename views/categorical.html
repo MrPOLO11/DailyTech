@@ -1,15 +1,18 @@
-<!DOCTYPE html>
-<!--LOGIN PAGE-->
+<!doctype html>
+<!--HOME PAGE-->
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="google-signin-client_id" content="819490311055-7bn7bd0jpuncni77k66upg6igd31ucd9.apps.googleusercontent.com">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{@BASE}}/styles/nav.css">
-    <link rel="stylesheet" href="{{@BASE}}/styles/styles.css">
-    <link rel="stylesheet" href="{{@BASE}}/styles/login.css">
-    <link rel="icon" href="{{@BASE}}/favicon/favicon.ico" type="image/x-icon">
-    <title>Login</title>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="{{@BASE}}/styles/nav.css">
+	<link rel="stylesheet" href="{{@BASE}}/styles/styles.css">
+	<link rel="stylesheet" href="{{@BASE}}/styles/home.css">
+	<link rel="icon" href="{{@BASE}}/favicon/favicon.ico" type="image/x-icon">
+
+	<title>The Daily Tech</title>
 </head>
 <body>
 
@@ -51,34 +54,23 @@
 </nav>
 
 <div class="container">
-    <form action="#" method="post">
-        <div class="card bg-light" id="loginCard">
-            <div class="card-body" id="loginBody">
-				<div id="loginFields">
-                    <div class="form-group">
-                        <label for="email">E-mail</label>
-                        <input type="text" class="form-control" id="email" name="email" placeholder="example@mail.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                    </div>
 
+	<F3:repeat group="{{ @categoryposts }}" value="{{ @post }}">
+		<a href="{{@BASE}}/view/{{@post.header}}">
+			<div class="row">
+				<div class="card mb-3 bg-light border-primary text-center cardDim">
+					<div class="card-body">
+						<h4 class="card-title">{{ @post.header }}</h4>
+					</div>
 				</div>
-
-				<div class="form-group d-flex justify-content-around">
-                    <button type="submit" class="btn btn-secondary ">Login</button>
-                    <a href="signup" ><button type="button" class="btn btn-secondary ">Create Account</button></a>
-                    <div class="g-signin2" data-onsuccess="onSignIn"> <button type="button" class="btn btn-secondary ">Google</button></div>
-                </div>
-            </div>
-        </div>
-    </form>
+			</div>
+			<hr>
+		</a>
+	</F3:repeat>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src="https://apis.google.com/js/platform.js" async defer></script>
 </body>
 </html>

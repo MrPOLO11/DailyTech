@@ -12,6 +12,8 @@ class Controller {
 	}
 
 	public  function home() {
+		$posts = $GLOBALS['db']->getPosts();
+		$GLOBALS['f3']->set('posts', $posts);
         $view = new Template();
         echo $view->render('views/home.html');
     }
@@ -64,5 +66,24 @@ class Controller {
 	    session_destroy();
 	    $GLOBALS['f3']->reroute('/');;
     }
+
+    public function viewPost($header) {
+		$current = $GLOBALS['db']->getPostByHeader($header);
+		$GLOBALS['f3']->set('header',$current['header']);
+		$GLOBALS['f3']->set('content',$current['articleText']);
+
+		$view = new Template();
+		echo $view->render('views/view.html');
+	}
+
+	public function category($category) {
+		$current = $GLOBALS['db']->getCategoricalPosts($category);
+
+		$GLOBALS['f3']->set('categoryposts',$current);
+
+
+		$view = new Template();
+		echo $view->render('views/categorical.html');
+	}
 
 }

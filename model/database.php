@@ -51,10 +51,28 @@ class Database
 
         $statement->execute();
 
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        return $result;
+
     }
+
+    function getPostByHeader($header) {
+    	$sql = "SELECT * FROM MyPost
+				WHERE :header = header";
+		$statement = $this->_dbh->prepare($sql);
+		$statement->bindParam(':header', $header);
+		$statement->execute();
+		return $statement->fetch(PDO::FETCH_ASSOC);
+	}
+
+	function getCategoricalPosts($category) {
+    	$sql = "SELECT * FROM MyPost
+    			WHERE :category = category";
+    	$statement = $this->_dbh->prepare($sql);
+    	$statement->bindParam(':category',$category);
+    	$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	}
 
     function insertUser($user) {
         $sql = "INSERT INTO MyUser(name, email, organization, position, myPassword, isAdmin)

@@ -34,6 +34,15 @@ $f3->route('GET /logout', function () {
     $GLOBALS['controller']->logout();
 });
 
+$f3->route('GET /view/@header', function () {
+    $GLOBALS['controller']->viewPost($GLOBALS['f3']->get('PARAMS.header'));
+});
+$f3->route('GET /category/@category', function () {
+    $GLOBALS['controller']->category($GLOBALS['f3']->get('PARAMS.category'));
+});
+
+
+
 // Run F3
 $f3->run();
 

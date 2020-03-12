@@ -20,29 +20,35 @@
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-	<a class="navbar-brand" href="#">The Daily Tech</a>
+	<a class="navbar-brand" href="{{@BASE}}/">The Daily Tech</a>
 
 	<div class="collapse navbar-collapse" id="navbar-main">
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 			<li class="nav-item active">
-				<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+				<a class="nav-link" href="{{@BASE}}/">Home <span class="sr-only">(current)</span></a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">General</a>
+				<a class="nav-link" href="{{@BASE}}/category/{{general}}">General</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">Mobile</a>
+				<a class="nav-link" href="{{@BASE}}/category/{{mobile}}">Mobile</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">Programming</a>
+				<a class="nav-link" href="{{@BASE}}/category/{{programming}}">Programming</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">Science</a>
+				<a class="nav-link" href="{{@BASE}}/category/{{science}}">Science</a>
 			</li>
-		<check if=" {{ isset(@SESSION.user) }}">
-			<true><li class="nav-item"><a class="nav-link" href="logout">Logout</a></li></true>
-			<false><li class="nav-item"><a href="login" class="nav-link">Log In</a></li></false>
-		</check>
+			<check if=" {{ isset(@SESSION.user) }}">
+				<true>
+					<li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
+					<li class="nav-item"><a class="nav-link" href="{{@BASE}}/settings">Settings</a></li>
+				</true>
+
+				<false>
+					<li class="nav-item"><a href="login" class="nav-link">Log In</a></li>
+				</false>
+			</check>
 		</ul>
 	</div>
 </nav>
@@ -50,11 +56,6 @@
 	<div class="container">
 		<div class="bd-example">
 			<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-				<ol class="carousel-indicators">
-					<li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-					<li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-					<li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-				</ol>
 				<div class="carousel-inner">
 					<div class="carousel-item active">
 						<img src="images/1.jpg" class="d-block w-100" alt="photo">
@@ -90,6 +91,18 @@
 		</div>
 
 <!--		RECENT ARTICLES GO HERE-->
+		<F3:repeat group="{{ @posts }}" value="{{ @post }}">
+			<a href="{{@BASE}}/view/{{@post.header}}">
+				<div class="row">
+					<div class="card mb-3 bg-light border-primary text-center cardDim">
+						<div class="card-body ">
+							<h4 class="card-title">{{ @post.header }}</h4>
+						</div>
+					</div>
+				</div>
+				<hr>
+			</a>
+		</F3:repeat>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

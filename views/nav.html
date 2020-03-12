@@ -1,32 +1,39 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <a class="navbar-brand" href="#">The Daily Tech</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<a class="navbar-brand" href="{{@BASE}}/">The Daily Tech</a>
 
-    <div class="collapse navbar-collapse" id="navbar-main">
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="{{/}}">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ /general }}">General</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ /mobile}}">Mobile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{/programming}}">Programming</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ /science }}">Science</a>
-            </li>
+	<div class="collapse navbar-collapse" id="navbar-main">
+		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+			<li class="nav-item active">
+				<a class="nav-link" href="{{@BASE}}/">Home <span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{@BASE}}/category/{{general}}">General</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{@BASE}}/category/{{mobile}}">Mobile</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{@BASE}}/category/{{programming}}">Programming</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{@BASE}}/category/{{science}}">Science</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{@BASE}}/category/{{science}}">BRUHHHH</a>
+			</li>
+			<check if=" {{ isset(@SESSION.user) }}">
+				<true>
+					<li class="nav-item"><a class="nav-link" href="logout">Logout</a></li>
+					<li class="nav-item"><a class="nav-link" href="{{@BASE}}/settings">Settings</a></li>
+				</true>
 
-    <li class="nav-item">
-
-            <a class="nav-link" href="{{/logout}">LogOut</a>
-
-</li>
-        </ul>
-    </div>
+				<false>
+					<li class="nav-item"><a href="login" class="nav-link">Log In</a></li>
+				</false>
+			</check>
+		</ul>
+	</div>
 </nav>
