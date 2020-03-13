@@ -1,3 +1,20 @@
 body {
 	background-color: #343a40;
 }
+
+a {
+	color: #0060B6;
+	text-decoration: none;
+}
+
+a:hover
+{
+	color:#00A0C6;
+	text-decoration:none;
+	cursor:pointer;
+}
+
+.cardDim {
+	width: 100%;
+	border-radius: 20px !important;
+}

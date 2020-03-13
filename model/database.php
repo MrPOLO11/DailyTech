@@ -57,7 +57,7 @@ class Database
 	function getMainPosts()
 	{
 		$sql = "SELECT * FROM MyPost
-                ORDER BY post_ID
+                ORDER BY post_ID DESC 
                 LIMIT 4";
 
 		$statement = $this->_dbh->prepare($sql);

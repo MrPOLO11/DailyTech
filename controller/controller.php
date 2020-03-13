@@ -31,10 +31,6 @@ class Controller {
                     $userArray['position']
                 );
 	            $GLOBALS['f3']->reroute('/');
-            } else if(!$validPass){
-                global $f3;
-                $f3->set("errors['email']", "*Incorrect Email");
-                $f3->set("errors['password']", "*Incorrect Password");
             }
         }
         $view = new Template();
@@ -46,43 +42,24 @@ class Controller {
 	        $GLOBALS['f3']->reroute('/');
         }
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if($this->checkSignUp($_POST['email'], $_POST['password'])) {
-                $passHash = sha1($_POST['password']);
-                $name = $_POST['name'];
-                $email = $_POST['email'];
-                $organization = $_POST['org'];
-                $position = $_POST['position'];
-                $user = new StandardUser(
-                    $name,
-                    $email,
-                    $passHash,
-                    $organization,
-                    $position);
+            $passHash = sha1($_POST['password']);
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $organization = $_POST['org'];
+            $position = $_POST['position'];
+            $user = new StandardUser(
+                $name,
+                $email,
+                $passHash,
+                $organization,
+                $position);
 
                 $_SESSION['user'] = $user;
                 $GLOBALS['db']->insertUser($user);
                 $GLOBALS['f3']->reroute('/');
-            }
         }
         $view = new Template();
         echo $view->render('views/signup.html');
-    }
-
-    public function checkSignUp($email, $password) {
-        global $f3;
-        if(isset($email)) {
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $f3->set("errors['emailSignUp']", "*Must Provide a valid Email");
-                return false;
-            }
-            else if(isset($password)) {
-                if (strlen($password) < 8) {
-                    $f3->set("errors['passwordSignUp']", "*Password must be 8 characters or more");
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     public function logout() {
@@ -107,6 +84,13 @@ class Controller {
 
 		$view = new Template();
 		echo $view->render('views/categorical.html');
+	}
+
+	public function settings() {
+
+
+		$view = new Template();
+		echo $view->render('views/settings.html');
 	}
 
 }

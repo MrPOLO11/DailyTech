@@ -1,16 +1,12 @@
-.carousel-caption {
-	background-color: rgba(0,0,0,0.5);
-}
-
 .carousel-inner {
 	height: 500px !important;
 }
 
-.cardDim {
-	width: 100%;
-	border-radius: 20px !important;
-}
 hr {
 	border: 1px solid whitesmoke;
 	margin-bottom: 30px;
+}
+
+#carousel {
+	padding-bottom: 50px;
 }
