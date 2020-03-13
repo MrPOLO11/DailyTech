@@ -1,0 +1,10 @@
+.list-group {
+	padding-top: 250px;
+	width: 70%;
+}
+
+.list-group-item {
+	height: 50px;
+	margin-bottom: 10px !important;
+}
+

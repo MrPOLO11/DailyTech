@@ -38,7 +38,7 @@ class Database
         $statement = $this->_dbh->prepare($sql);
 		$statement->bindParam(':email', $email);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetch(PDO::FETCH_ASSOC);
 
     }
 
@@ -104,6 +104,27 @@ class Database
 
         $statement->execute();
     }
+
+	function updateUser($user, $id) {
+		$sql = "UPDATE `MyUser` 
+		SET `name` = ':name', 
+		`email` = ':email', 
+		`organization` = ':org', 
+		`position` = ':pos' 
+		WHERE `MyUser`.`user_ID` = ':id'";
+
+		$statement = $this->_dbh->prepare($sql);
+
+		$statement ->bindParam(':name', $user->getName());
+		$statement ->bindParam(':email', $user->getEmail());
+		$statement ->bindParam(':org', $user->getOrganization());
+		$statement ->bindParam(':pos', $user->getPosition());
+		$statement ->bindParam(':id', $id);
+
+		$statement->execute();
+	}
+
+
 
     function verifyLogin($email, $password) {
         // PULL PASSWORD HASH

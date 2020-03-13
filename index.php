@@ -46,6 +46,22 @@ $f3->route('GET /settings', function () {
     $GLOBALS['controller']->settings();
 });
 
+$f3->route('GET /adminPage', function () {
+    $GLOBALS['controller']->admin();
+});
+
+$f3->route('GET|POST /updateaccount', function () {
+    $GLOBALS['controller']->updateaccount();
+});
+
+$f3->route('GET /updatepassword', function () {
+    $GLOBALS['controller']->updatepassword();
+});
+
+$f3->route('GET /deleteaccount', function () {
+    $GLOBALS['controller']->deleteaccount();
+});
+
 
 
 
