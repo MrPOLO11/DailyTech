@@ -12,7 +12,7 @@ class Controller {
 	}
 
 	public  function home() {
-		$posts = $GLOBALS['db']->getPosts();
+		$posts = $GLOBALS['db']->getMainPosts();
 		$GLOBALS['f3']->set('posts', $posts);
         $view = new Template();
         echo $view->render('views/home.html');

@@ -52,9 +52,20 @@ class Database
         $statement->execute();
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
-
-
     }
+
+	function getMainPosts()
+	{
+		$sql = "SELECT * FROM MyPost
+                ORDER BY post_ID
+                LIMIT 4";
+
+		$statement = $this->_dbh->prepare($sql);
+
+		$statement->execute();
+
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
+	}
 
     function getPostByHeader($header) {
     	$sql = "SELECT * FROM MyPost
