@@ -40,8 +40,4 @@ class post {
     {
         return $this->_body;
     }
-
-
-
-
 }

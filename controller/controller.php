@@ -32,6 +32,9 @@ class Controller {
                 );
 	            $GLOBALS['f3']->reroute('/');
             }
+	        global $f3;
+            $f3->set("errors['email']", "*Incorrect Email");
+            $f3->set("errors['password']", "*Incorrect Password");
         }
         $view = new Template();
         echo $view->render('views/login.html');
