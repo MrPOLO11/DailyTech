@@ -74,11 +74,17 @@
 
                     <div class="form-group">
                         <label for="email">E-mail</label>
+                        <check if="{{ @errors['emailSignUp'] }}">
+                            <span class="err">{{ @errors['emailSignUp'] }}</span>
+                        </check>
                         <input type="email" class="form-control" id="email" name="email" placeholder="example@mail.com">
                     </div>
 
                     <div class="form-group">
                         <label for="password">Password</label>
+                        <check if="{{ @errors['passwordSignUp'] }}">
+                            <span class="err">{{ @errors['passwordSignUp'] }}</span>
+                        </check>
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                     </div>
 
