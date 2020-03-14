@@ -42,6 +42,16 @@ class Database
 
     }
 
+    function deleteUser($id) {
+    	$sql = "DELETE FROM `MyUser` WHERE `MyUser`.`user_ID` = :id";
+
+    	$statement = $this->_dbh->prepare($sql);
+
+    	$statement->bindParam(':id',$id);
+    	$statement->execute();
+
+	}
+
     function getPosts()
     {
         $sql = "SELECT * FROM MyPost

@@ -158,17 +158,50 @@ class Controller
 
 		if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$serverUser = $GLOBALS['db']->getUser($_SESSION['user']->getEmail());
-			var_dump($_POST);
+
 			$id = $serverUser['user_ID'];
-			if ($serverUser['myPassword'] == sha1($_POST['new']) && $_POST['new'] == $_POST['confirm']) {
-				$GLOBALS['db']->updatePassword(sha1($_POST['new']),$id);
-				$GLOBALS['f3']->set('updatePasswordSuccess', 'Update Completed Successfully');
+			$newPass = sha1(sha1($_POST['new']));
+
+			if ($serverUser['email'] == $_POST['email']) {
+
+				if ($serverUser['myPassword']==sha1(sha1($_POST['current'])) &&
+					$_POST['new']== $_POST['confirm']) {
+					$GLOBALS['db']->updatePassword($newPass,$id);
+					$GLOBALS['f3']->set('updatePasswordSuccess',
+						'Update Completed Successfully');
+				}
+				else {
+					$GLOBALS['f3']->set('updatePasswordSuccess','Update Failed');
+				}
+
 			} else {
-				$GLOBALS['f3']->set('updatePasswordSuccess', 'Update Failed');
+				$GLOBALS['f3']->set('updatePasswordSuccess','Update Failed');
 			}
 		}
 
 		$view = new Template();
 		echo $view->render('views/updatepassword.html');
 	}
+
+	public function deleteaccount() {
+		if(!isset($_SESSION['user'])) {
+			$GLOBALS['f3']->reroute('/login');
+		}
+
+		if ($_SERVER['REQUEST_METHOD']=='POST') {
+			$serverUser = $GLOBALS['db']->getUser($_SESSION['user']->getEmail());
+
+			$id = $serverUser['user_ID'];
+			$suppliedPassword = sha1(sha1($_POST['password']));
+
+			//CALL VALIDATION FUNCTION HERE
+
+			$GLOBALS['db']->deleteUser($id);
+			session_destroy();
+			$GLOBALS['f3']->reroute('/');
+		}
+		$view = new Template();
+		echo $view->render('views/deleteaccount.html');
+	}
+
 }

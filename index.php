@@ -58,11 +58,13 @@ $f3->route('GET|POST /updatepassword', function () {
     $GLOBALS['controller']->updatepassword();
 });
 
-$f3->route('GET /deleteaccount', function () {
+$f3->route('GET|POST /deleteaccount', function () {
     $GLOBALS['controller']->deleteaccount();
 });
 
-
+$f3->route('GET|POST /createArticle', function() {
+	$GLOBALS['controller']->createArticle();
+});
 
 
 
