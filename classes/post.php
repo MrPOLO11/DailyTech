@@ -1,28 +1,48 @@
 <?php
 
 class post {
-	private $_type;
+	private $_category;
 	private $_header;
 	private $_body;
+	private $_userID;
+
 
 	/**
 	 * post constructor.
-	 * @param $_type
+	 * @param $_category
 	 * @param $_header
 	 * @param $_body
+	 * @param $_userID
 	 */
-	public function __construct($_type,$_header,$_body) {
-		$this->_type=$_type;
+	public function __construct($_category,$_header,$_body,$_userID) {
+		$this->_category=$_category;
 		$this->_header=$_header;
 		$this->_body=$_body;
+		$this->_userID=$_userID;
+
+	}
+
+
+	/**
+	 * @return mixed
+	 */
+	public function getUserID() {
+		return $this->_userID;
+	}
+
+	/**
+	 * @param mixed $userID
+	 */
+	public function setUserID($userID) {
+		$this->_userID=$userID;
 	}
 
     /**
      * @return mixed
      */
-    public function getType()
+    public function getCategory()
     {
-        return $this->_type;
+        return $this->_category;
     }
 
     /**
@@ -40,4 +60,8 @@ class post {
     {
         return $this->_body;
     }
+
+
+
+
 }

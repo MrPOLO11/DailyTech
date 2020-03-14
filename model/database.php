@@ -147,8 +147,6 @@ class Database
 		$statement->execute();
 	}
 
-
-
     function verifyLogin($email, $password) {
         // PULL PASSWORD HASH
         $sql = "SELECT myPassword FROM MyUser
@@ -164,26 +162,21 @@ class Database
         return $storedHash == sha1(sha1($password));
     }
 
-    function insertPosts($email, $post)
+    function insertPost($post)
     {
-        $sql = "SELECT user_ID FROM MyUser
-                WHERE :email = email";
+        $serverUser = $this->getUser($_SESSION['user']->getEmail());
+
+        $sql = "INSERT INTO MyPost (`user_ID`, `articleText`, `header`, `category`)
+                 WHERE :userID = user_ID
+                 VALUES (:userID, :body, :header, :category)";
 
         $statement = $this->_dbh->prepare($sql);
-        $statement->bindParam(':email', $email);
-
-        $foundID = $statement->fetch(PDO::FETCH_ASSOC);
-        $userID = $foundID->get('user_ID');
-
-        $sql2 = "INSERT INTO MyPost (`user_ID`, `articleText`, `header`)
-                 WHERE :userID = user_ID
-                 VALUES (:userID, :body, :header)";
-
-        $statement = $this->_dbh->prepare($sql2);
-        $statement->bindParam(':userID', $userID);
+        $statement->bindParam(':userID', $serverUser['user_ID']);
         $statement->bindParam(':body', $post->getBody());
         $statement->bindParam(':header', $post->getHeader());
+        $statement->bindParam(':category', $post->getCategory());
 
         $statement ->execute();
     }
+
 }

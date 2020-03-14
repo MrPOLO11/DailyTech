@@ -204,4 +204,19 @@ class Controller
 		echo $view->render('views/deleteaccount.html');
 	}
 
+	public function createarticle() {
+		if(!isset($_SESSION['user'])) {
+			$GLOBALS['f3']->reroute('/login');
+		}
+
+		if ($_SERVER['REQUEST_METHOD']=='POST') {
+			$serverUser=$GLOBALS['db']->getUser($_SESSION['user']->getEmail());
+
+			$id=$serverUser['user_ID'];
+		}
+
+		$view = new Template();
+		echo $view->render('views/createarticle.html');
+	}
+
 }
