@@ -97,9 +97,9 @@ class Controller
 	public function settings()
 	{
 		if (is_a($_SESSION['user'],'AdminUser')) {
-			reroute('/adminPage');
+			$GLOBALS['f3']->reroute('/adminPage');
 		} else if(!isset($_SESSION['user'])) {
-			reroute('/login');
+			$GLOBALS['f3']->reroute('/login');
 		}
 
 		$view = new Template();
@@ -109,27 +109,26 @@ class Controller
 	public function admin()
 		{
 			if (is_a($_SESSION['user'],'StandardUser')) {
-				reroute('/settings');
+				$GLOBALS['f3']->reroute('/settings');
 			} else if(!isset($_SESSION['user'])) {
-				reroute('/login');
+				$GLOBALS['f3']->reroute('/login');
 			}
 
 
 	}
 
-	public function updateaccount() {
+	public function updateaccount()
+	{
 		if(!isset($_SESSION['user'])) {
-			reroute('/login');
+			$GLOBALS['f3']->reroute('/login');
 		}
 
 		if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$user = $_SESSION['user'];
-			var_dump($user);
 			$serverUser = $GLOBALS['db']->getUser($user->getEmail());
 
-			var_dump($serverUser);
 			$id = $serverUser['user_ID'];
-			echo "id: ".$id;
+
 			if ($_POST['name']!=$_SESSION['user']->getName()) {
 				$_SESSION['user']->setName($_POST['name']);
 			}
@@ -142,11 +141,8 @@ class Controller
 			if ($_POST['position']!=$_SESSION['user']->getPosition()) {
 				$_SESSION['user']->setPosition($_POST['position']);
 			}
-			$user = $_SESSION['user'];
-			echo "<br>";
-			echo "updated: ";
-			var_dump($user);
-			$GLOBALS['db']->updateUser($user,$id);
+			$GLOBALS['db']->updateUser($_SESSION['user'],$id);
+			$GLOBALS['f3']->set('updateSucesss', 'Update Completed Successfully');
 
 		}
 
@@ -154,4 +150,25 @@ class Controller
 		echo $view->render('views/account.html');
 	}
 
+	public function updatepassword()
+	{
+		if(!isset($_SESSION['user'])) {
+			$GLOBALS['f3']->reroute('/login');
+		}
+
+		if ($_SERVER['REQUEST_METHOD']=='POST') {
+			$serverUser = $GLOBALS['db']->getUser($_SESSION['user']->getEmail());
+			var_dump($_POST);
+			$id = $serverUser['user_ID'];
+			if ($serverUser['myPassword'] == sha1($_POST['new']) && $_POST['new'] == $_POST['confirm']) {
+				$GLOBALS['db']->updatePassword(sha1($_POST['new']),$id);
+				$GLOBALS['f3']->set('updatePasswordSuccess', 'Update Completed Successfully');
+			} else {
+				$GLOBALS['f3']->set('updatePasswordSuccess', 'Update Failed');
+			}
+		}
+
+		$view = new Template();
+		echo $view->render('views/updatepassword.html');
+	}
 }

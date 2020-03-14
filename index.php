@@ -54,7 +54,7 @@ $f3->route('GET|POST /updateaccount', function () {
     $GLOBALS['controller']->updateaccount();
 });
 
-$f3->route('GET /updatepassword', function () {
+$f3->route('GET|POST /updatepassword', function () {
     $GLOBALS['controller']->updatepassword();
 });
 

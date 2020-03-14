@@ -107,11 +107,11 @@ class Database
 
 	function updateUser($user, $id) {
 		$sql = "UPDATE `MyUser` 
-		SET `name` = ':name', 
-		`email` = ':email', 
-		`organization` = ':org', 
-		`position` = ':pos' 
-		WHERE `MyUser`.`user_ID` = ':id'";
+		SET `name` = :name, 
+		`email` = :email, 
+		`organization` = :org, 
+		`position` = :pos 
+		WHERE `MyUser`.`user_ID` = :id";
 
 		$statement = $this->_dbh->prepare($sql);
 
@@ -120,6 +120,19 @@ class Database
 		$statement ->bindParam(':org', $user->getOrganization());
 		$statement ->bindParam(':pos', $user->getPosition());
 		$statement ->bindParam(':id', $id);
+
+		$statement->execute();
+	}
+
+	function updatePassword($password, $id) {
+    	$sql = "UPDATE `MyUser`
+    	SET `myPassword` = :pswd
+    	WHERE `MyUser`.`user_ID` = :id";
+
+		$statement = $this->_dbh->prepare($sql);
+
+		$statement ->bindParam(':id', $id);
+		$statement ->bindParam(':pswd', $password);
 
 		$statement->execute();
 	}
