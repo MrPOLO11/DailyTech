@@ -211,8 +211,19 @@ class Controller
 
 		if ($_SERVER['REQUEST_METHOD']=='POST') {
 			$serverUser=$GLOBALS['db']->getUser($_SESSION['user']->getEmail());
+			//VALIDATE FIELDS FUNCTION
 
+			$header = $_POST['header'];
+			$article = $_POST['article'];
+			$category = $_POST['category'];
 			$id=$serverUser['user_ID'];
+
+
+
+			$post = new Post($category, $header, $article,$id);
+			var_dump($post);
+			$GLOBALS['db']->insertPost($post);
+//			$GLOBALS['f3']->reroute('/');
 		}
 
 		$view = new Template();

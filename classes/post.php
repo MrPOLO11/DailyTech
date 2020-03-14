@@ -1,6 +1,6 @@
 <?php
 
-class post {
+class Post {
 	private $_category;
 	private $_header;
 	private $_body;

@@ -164,14 +164,11 @@ class Database
 
     function insertPost($post)
     {
-        $serverUser = $this->getUser($_SESSION['user']->getEmail());
-
         $sql = "INSERT INTO MyPost (`user_ID`, `articleText`, `header`, `category`)
-                 WHERE :userID = user_ID
                  VALUES (:userID, :body, :header, :category)";
 
         $statement = $this->_dbh->prepare($sql);
-        $statement->bindParam(':userID', $serverUser['user_ID']);
+        $statement->bindParam(':userID', $post->getUserID());
         $statement->bindParam(':body', $post->getBody());
         $statement->bindParam(':header', $post->getHeader());
         $statement->bindParam(':category', $post->getCategory());
