@@ -28,6 +28,15 @@ class Validator
         return empty($this->_errors);
     }
 
+    public function validUpdateAccount()
+    {
+        //var_dump($_POST['name']);
+        $this->validName($_POST['name']);
+        $this->validEmail($_POST['email']);
+
+        return empty($this->_errors);
+    }
+
     private function validName($name)
     {
         if(empty($name)) {

@@ -39,10 +39,9 @@ class Controller
                     );
                     $GLOBALS['f3']->reroute('/');
                 }
-            }  else {
-                $this->_f3->set('errors', $this->_val->getErrors());
             }
         }
+        $this->_f3->set('errors', $this->_val->getErrors());
         $view = new Template();
         echo $view->render('views/login.html');
     }
@@ -56,7 +55,6 @@ class Controller
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $this->_val = new Validator();
             if($this->_val->validSignup()) {
-                echo "Passed Test";
                 $passHash = sha1($_POST['password']);
                 $name = $_POST['name'];
                 $email = $_POST['email'];
@@ -136,28 +134,30 @@ class Controller
 		}
 
 		if ($_SERVER['REQUEST_METHOD']=='POST') {
-			$user = $_SESSION['user'];
-			$serverUser = $GLOBALS['db']->getUser($user->getEmail());
+		    $this->_val = new Validator();
+		    if($this->_val->validUpdateAccount()) {
+                $user = $_SESSION['user'];
+                $serverUser = $GLOBALS['db']->getUser($user->getEmail());
 
-			$id = $serverUser['user_ID'];
+                $id = $serverUser['user_ID'];
 
-			if ($_POST['name']!=$_SESSION['user']->getName()) {
-				$_SESSION['user']->setName($_POST['name']);
-			}
-			if ($_POST['email']!=$_SESSION['user']->getEmail()) {
-				$_SESSION['user']->setEmail($_POST['email']);
-			}
-			if ($_POST['org']!=$_SESSION['user']->getOrganization()) {
-				$_SESSION['user']->setOrganization($_POST['org']);
-			}
-			if ($_POST['position']!=$_SESSION['user']->getPosition()) {
-				$_SESSION['user']->setPosition($_POST['position']);
-			}
-			$GLOBALS['db']->updateUser($_SESSION['user'],$id);
-			$GLOBALS['f3']->set('updateSucesss', 'Update Completed Successfully');
-
+                if ($_POST['name'] != $_SESSION['user']->getName()) {
+                    $_SESSION['user']->setName($_POST['name']);
+                }
+                if ($_POST['email'] != $_SESSION['user']->getEmail()) {
+                    $_SESSION['user']->setEmail($_POST['email']);
+                }
+                if ($_POST['org'] != $_SESSION['user']->getOrganization()) {
+                    $_SESSION['user']->setOrganization($_POST['org']);
+                }
+                if ($_POST['position'] != $_SESSION['user']->getPosition()) {
+                    $_SESSION['user']->setPosition($_POST['position']);
+                }
+                $GLOBALS['db']->updateUser($_SESSION['user'], $id);
+                $GLOBALS['f3']->set('updateSucesss', 'Update Completed Successfully');
+            }
 		}
-
+        $this->_f3->set('errors', $this->_val->getErrors());
 		$view = new Template();
 		echo $view->render('views/account.html');
 	}
