@@ -3,6 +3,7 @@
 class Controller
 {
     private $_f3;
+    private $_val;
 
     /**
      * Controller constructor.
@@ -41,27 +42,32 @@ class Controller
         echo $view->render('views/login.html');
     }
 
-    public function  signup()
+    public function signup()
 	{
 	    if (isset($_SESSION['user'])) {
 	        $GLOBALS['f3']->reroute('/');
         }
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $passHash = sha1($_POST['password']);
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $organization = $_POST['org'];
-            $position = $_POST['position'];
-            $user = new StandardUser(
-                $name,
-                $email,
-                $passHash,
-                $organization,
-                $position);
+            $this->_val = new Validator();
+            if($this->_val->validSignup()) {
+                $passHash = sha1($_POST['password']);
+                $name = $_POST['name'];
+                $email = $_POST['email'];
+                $organization = $_POST['org'];
+                $position = $_POST['position'];
+                $user = new StandardUser(
+                    $name,
+                    $email,
+                    $passHash,
+                    $organization,
+                    $position);
 
                 $_SESSION['user'] = $user;
                 $GLOBALS['db']->insertUser($user);
                 $GLOBALS['f3']->reroute('/');
+            } else {
+                $this->_f3->set('errors', $this->_val->getErrors());
+            }
         }
         $view = new Template();
         echo $view->render('views/signup.html');
