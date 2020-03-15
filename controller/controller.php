@@ -24,18 +24,23 @@ class Controller
     public  function login()
 	{
 	    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $suppliedPass = $_POST['password'];
-            $suppliedEmail = $_POST['email'];
-	        $validPass = $GLOBALS['db']->verifyLogin($suppliedEmail, $suppliedPass);
-	        if ($validPass) {
-                $userArray = $GLOBALS['db']-> getUser($suppliedEmail);
-	            $_SESSION['user'] = new User($userArray['name'],
-                    $suppliedEmail,
-                    $suppliedPass,
-                    $userArray['organization'],
-                    $userArray['position']
-                );
-	            $GLOBALS['f3']->reroute('/');
+            $this->_val = new Validator();
+            if($this->_val->validLogin()) {
+                $suppliedPass = $_POST['password'];
+                $suppliedEmail = $_POST['email'];
+                $validPass = $GLOBALS['db']->verifyLogin($suppliedEmail, $suppliedPass);
+                if ($validPass) {
+                    $userArray = $GLOBALS['db']->getUser($suppliedEmail);
+                    $_SESSION['user'] = new User($userArray['name'],
+                        $suppliedEmail,
+                        $suppliedPass,
+                        $userArray['organization'],
+                        $userArray['position']
+                    );
+                    $GLOBALS['f3']->reroute('/');
+                }
+            }  else {
+                $this->_f3->set('errors', $this->_val->getErrors());
             }
         }
         $view = new Template();
@@ -44,12 +49,14 @@ class Controller
 
     public function signup()
 	{
+        $this->_val = new Validator();
 	    if (isset($_SESSION['user'])) {
 	        $GLOBALS['f3']->reroute('/');
         }
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $this->_val = new Validator();
             if($this->_val->validSignup()) {
+                echo "Passed Test";
                 $passHash = sha1($_POST['password']);
                 $name = $_POST['name'];
                 $email = $_POST['email'];
@@ -65,10 +72,9 @@ class Controller
                 $_SESSION['user'] = $user;
                 $GLOBALS['db']->insertUser($user);
                 $GLOBALS['f3']->reroute('/');
-            } else {
-                $this->_f3->set('errors', $this->_val->getErrors());
             }
         }
+        $this->_f3->set('errors', $this->_val->getErrors());
         $view = new Template();
         echo $view->render('views/signup.html');
     }

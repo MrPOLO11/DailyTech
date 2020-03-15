@@ -13,11 +13,19 @@ class Validator
         return $this->_errors;
     }
 
+    public function validLogin()
+    {
+        $this->validEmail($_POST['email']);
+        return empty($this->_errors);
+    }
+
     public function validSignup()
     {
         $this->validName($_POST['name']);
         $this->validEmail($_POST['email']);
         $this->validPassword($_POST['email'], $_POST['password']);
+
+        return empty($this->_errors);
     }
 
     private function validName($name)
