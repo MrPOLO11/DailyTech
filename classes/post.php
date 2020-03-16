@@ -1,6 +1,13 @@
 <?php
 
+/**
+ * Class Post
+ *
+ * The following class defines the attributes of a post such as
+ * category, header, body and user associated with post
+ */
 class Post {
+    //fields
 	private $_category;
 	private $_header;
 	private $_body;
@@ -24,6 +31,7 @@ class Post {
 
 
 	/**
+     * The following function retrieves id of user
 	 * @return mixed
 	 */
 	public function getUserID() {
@@ -31,6 +39,7 @@ class Post {
 	}
 
 	/**
+     * The following function sets id of user
 	 * @param mixed $userID
 	 */
 	public function setUserID($userID) {
@@ -38,6 +47,7 @@ class Post {
 	}
 
     /**
+     * The following function retrieves category of post
      * @return mixed
      */
     public function getCategory()
@@ -46,6 +56,7 @@ class Post {
     }
 
     /**
+     * The following function retrieves header of post
      * @return mixed
      */
     public function getHeader()
@@ -54,14 +65,12 @@ class Post {
     }
 
     /**
+     * The following function retrieves body of post
      * @return mixed
      */
     public function getBody()
     {
         return $this->_body;
     }
-
-
-
 
 }

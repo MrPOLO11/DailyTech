@@ -1,8 +1,14 @@
 <?php
 
-
+/**
+ * Class User
+ *
+ * The following class defines the attributes of a default user
+ * such as login credentials and basic information of work background
+ */
 class User
 {
+    //fields
     private $_name;
     private $_email;
     private $_password;
@@ -28,6 +34,7 @@ class User
 
 
     /**
+     * The following function retrieves organization user works for
      * @return mixed
      */
     public function getOrganization()
@@ -36,6 +43,7 @@ class User
     }
 
     /**
+     * The following function sets organization of user
      * @param mixed $organization
      */
     public function setOrganization($organization)
@@ -44,6 +52,7 @@ class User
     }
 
     /**
+     * The following function retrieves position user holds
      * @return mixed
      */
     public function getPosition()
@@ -52,6 +61,7 @@ class User
     }
 
     /**
+     * The following function sets position of user
      * @param mixed $position
      */
     public function setPosition($position)
@@ -60,6 +70,7 @@ class User
     }
 
     /**
+     * The following function retrieves password of user
      * @return mixed
      */
     public function getPassword()
@@ -68,6 +79,7 @@ class User
     }
 
     /**
+     * The following function sets password of user
      * @param mixed $password
      */
     public function setPassword($password)
@@ -76,6 +88,7 @@ class User
     }
 
     /**
+     * The following function retrieves name of user
      * @return mixed
      */
     public function getName()
@@ -84,6 +97,7 @@ class User
     }
 
     /**
+     * The following function sets name of user
      * @param mixed $name
      */
     public function setName($name)
@@ -92,6 +106,7 @@ class User
     }
 
     /**
+     * The following function retrieves email of user
      * @return mixed
      */
     public function getEmail()
@@ -100,6 +115,7 @@ class User
     }
 
     /**
+     * The following function sets email of user
      * @param mixed $email
      */
     public function setEmail($email)
