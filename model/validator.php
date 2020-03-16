@@ -115,7 +115,8 @@ class Validator
      */
     public function validDelete()
     {
-        $this->validEmails($_POST['email'], $GLOBALS['db']->getEmail());
+
+        $this->validEmails($_POST['email'], $_SESSION['user']->getEmail());
         $this->validPasswords($_POST['current'], $_POST['confirmpass']);
         $this->checkPhrase($_POST['deleteconfirm']);
 
