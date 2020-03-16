@@ -71,21 +71,26 @@
 
 						<div class="form-group">
 							<label for="email">E-mail</label>
+							<span class="err">{{ @errors['email'] }}</span>
 							<input type="text" class="form-control" id="email" name="email" >
 						</div>
 
 						<div class="form-group">
 							<label for="current">Current Password</label>
+							<span class="err">{{ @errors['current'] }}</span>
 							<input type="password" class="form-control" id="current" name="current">
 						</div>
 
 						<div class="form-group">
 							<label for="confirmpass">Confirm Password</label>
+							<span class="err">{{ @errors['confirmpass'] }}</span>
 							<input type="password" class="form-control" id="confirmpass" name="confirmpass">
 						</div>
 
 						<div class="form-group">
-							<label for="deleteconfirm" class="text-danger">Please type the phrase "Delete My Profile"</label>
+							<label for="deleteconfirm" class="text-danger">
+								Please type the phrase "Delete My Profile"</label>
+							<span class="err">{{ @errors['deleteconfirm'] }}</span>
 							<input type="text" class="form-control" id="deleteconfirm" name="deleteconfirm">
 						</div>
 
