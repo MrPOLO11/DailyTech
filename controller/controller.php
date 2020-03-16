@@ -52,8 +52,8 @@ class Controller
 					$GLOBALS['f3']->reroute('/');
 				}
 			}
-	    	$this->_f3->set('errors', $this->_val->getErrors());
         }
+        $this->_f3->set('errors', $this->_val->getErrors());
         $view = new Template();
         echo $view->render('views/login.html');
     }
@@ -85,8 +85,8 @@ class Controller
 				$GLOBALS['db']->insertUser($user);
 				$GLOBALS['f3']->reroute('/');
 			}
-			$this->_f3->set('errors',$this->_val->getErrors());
 		}
+        $this->_f3->set('errors',$this->_val->getErrors());
         $view = new Template();
         echo $view->render('views/signup.html');
     }
