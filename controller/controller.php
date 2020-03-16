@@ -12,6 +12,7 @@ class Controller
 	public function __construct($_f3)
 	{
 		$this->_f3 = $_f3;
+        $this->_val = new Validator();
 	}
 
 	public  function home()
@@ -24,7 +25,6 @@ class Controller
     public  function login()
 	{
 	    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->_val = new Validator();
             if($this->_val->validLogin()) {
                 $suppliedPass = $_POST['password'];
                 $suppliedEmail = $_POST['email'];
@@ -48,12 +48,10 @@ class Controller
 
     public function signup()
 	{
-        $this->_val = new Validator();
 	    if (isset($_SESSION['user'])) {
 	        $GLOBALS['f3']->reroute('/');
         }
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->_val = new Validator();
             if($this->_val->validSignup()) {
                 $passHash = sha1($_POST['password']);
                 $name = $_POST['name'];
@@ -132,9 +130,7 @@ class Controller
 		if(!isset($_SESSION['user'])) {
 			$GLOBALS['f3']->reroute('/login');
 		}
-
 		if ($_SERVER['REQUEST_METHOD']=='POST') {
-		    $this->_val = new Validator();
 		    if($this->_val->validUpdateAccount()) {
                 $user = $_SESSION['user'];
                 $serverUser = $GLOBALS['db']->getUser($user->getEmail());
@@ -222,22 +218,23 @@ class Controller
 		}
 
 		if ($_SERVER['REQUEST_METHOD']=='POST') {
-			$serverUser=$GLOBALS['db']->getUser($_SESSION['user']->getEmail());
-			//VALIDATE FIELDS FUNCTION
+		    if($this->_val->validCreatePost()) {
+                $serverUser = $GLOBALS['db']->getUser($_SESSION['user']->getEmail());
+                //VALIDATE FIELDS FUNCTION
 
-			$header = $_POST['header'];
-			$article = $_POST['article'];
-			$category = $_POST['category'];
-			$id=$serverUser['user_ID'];
+                $header = $_POST['header'];
+                $article = $_POST['article'];
+                $category = $_POST['category'];
+                $id = $serverUser['user_ID'];
 
 
-
-			$post = new Post($category, $header, $article,$id);
-			var_dump($post);
-			$GLOBALS['db']->insertPost($post);
+                $post = new Post($category, $header, $article, $id);
+                var_dump($post);
+                $GLOBALS['db']->insertPost($post);
 //			$GLOBALS['f3']->reroute('/');
+            }
 		}
-
+        $this->_f3->set('errors', $this->_val->getErrors());
 		$view = new Template();
 		echo $view->render('views/createarticle.html');
 	}

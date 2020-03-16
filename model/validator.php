@@ -30,9 +30,18 @@ class Validator
 
     public function validUpdateAccount()
     {
-        //var_dump($_POST['name']);
+        var_dump($_POST['name']);
         $this->validName($_POST['name']);
         $this->validEmail($_POST['email']);
+
+        return empty($this->_errors);
+    }
+
+    public function validCreatePost()
+    {
+        $this->validHeader($_POST['header']);
+        $this->validArticleContent($_POST['post']);
+        $this->validCategory($_POST['category']);
 
         return empty($this->_errors);
     }
@@ -61,6 +70,32 @@ class Validator
             $this->_errors['password'] = "*Please provide a password";
         } else if(strlen($password) < 8) {
             $this->_errors['password'] = "*Password must be at least 8 characters";
+        }
+    }
+
+    private function validHeader($header)
+    {
+        if(empty($header)) {
+            $this->_errors['header'] = "*Please provide a header";
+        } else if (strlen($header) < 10 || strlen($header) > 25) {
+            $this->_errors['header'] = "*Header must be at least 10 and at most 25 characters";
+        }
+    }
+
+    private function validArticleContent($article)
+    {
+        if(empty($article)) {
+            $this->_errors['article'] = "*Please provide content";
+        } else if (strlen($article) < 300) {
+            $this->_errors['article'] = "*Article must consist of at least 300 characters";
+        }
+    }
+
+    private function validCategory($category)
+    {
+        $categories = array("general", "mobile", "programming", "science");
+        if(!in_array($category, $categories)) {
+            $this->_errors['category'] = "*Please select one of the provided category";
         }
     }
 }
