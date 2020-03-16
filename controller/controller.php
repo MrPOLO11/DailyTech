@@ -163,30 +163,30 @@ class Controller
 		if(!isset($_SESSION['user'])) {
 			$GLOBALS['f3']->reroute('/login');
 		}
-
 		if ($_SERVER['REQUEST_METHOD']=='POST') {
-			$serverUser = $GLOBALS['db']->getUser($_SESSION['user']->getEmail());
+		    if($this->_val->validUpdatePassword()) {
+                $serverUser = $GLOBALS['db']->getUser($_SESSION['user']->getEmail());
 
-			$id = $serverUser['user_ID'];
-			$newPass = sha1(sha1($_POST['new']));
+                $id = $serverUser['user_ID'];
+                $newPass = sha1(sha1($_POST['new']));
 
-			if ($serverUser['email'] == $_POST['email']) {
+                if ($serverUser['email'] == $_POST['email']) {
 
-				if ($serverUser['myPassword']==sha1(sha1($_POST['current'])) &&
-					$_POST['new']== $_POST['confirm']) {
-					$GLOBALS['db']->updatePassword($newPass,$id);
-					$GLOBALS['f3']->set('updatePasswordSuccess',
-						'Update Completed Successfully');
-				}
-				else {
-					$GLOBALS['f3']->set('updatePasswordSuccess','Update Failed');
-				}
+                    if ($serverUser['myPassword'] == sha1(sha1($_POST['current'])) &&
+                        $_POST['new'] == $_POST['confirm']) {
+                        $GLOBALS['db']->updatePassword($newPass, $id);
+                        $GLOBALS['f3']->set('updatePasswordSuccess',
+                            'Update Completed Successfully');
+                    } else {
+                        $GLOBALS['f3']->set('updatePasswordSuccess', 'Update Failed');
+                    }
 
-			} else {
-				$GLOBALS['f3']->set('updatePasswordSuccess','Update Failed');
-			}
+                } else {
+                    $GLOBALS['f3']->set('updatePasswordSuccess', 'Update Failed');
+                }
+            }
 		}
-
+        $this->_f3->set('errors', $this->_val->getErrors());
 		$view = new Template();
 		echo $view->render('views/updatepassword.html');
 	}

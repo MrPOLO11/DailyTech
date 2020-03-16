@@ -30,7 +30,6 @@ class Validator
 
     public function validUpdateAccount()
     {
-        var_dump($_POST['name']);
         $this->validName($_POST['name']);
         $this->validEmail($_POST['email']);
 
@@ -42,6 +41,15 @@ class Validator
         $this->validHeader($_POST['header']);
         $this->validArticleContent($_POST['post']);
         $this->validCategory($_POST['category']);
+
+        return empty($this->_errors);
+    }
+
+    public function validUpdatePassword()
+    {
+        $this->validEmail($_POST['email']);
+        $this->validPassword($_POST['email'], $_POST['current']);
+        $this->validPasswords($_POST['new'], $_POST['confirm']);
 
         return empty($this->_errors);
     }
@@ -96,6 +104,13 @@ class Validator
         $categories = array("general", "mobile", "programming", "science");
         if(!in_array($category, $categories)) {
             $this->_errors['category'] = "*Please select one of the provided category";
+        }
+    }
+
+    private function validPasswords($new, $confirm)
+    {
+        if($confirm !== $new) {
+            $this->_errors['confirm'] = "*Confirmation password must match with new password";
         }
     }
 }
